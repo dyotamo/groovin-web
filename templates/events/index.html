@@ -2,8 +2,11 @@
 
 {% block container %}
 <h4><a href="{{ url_for('new_event') }}">+ Evento</a></h4>
+
+{% if events %}
 <table class="table table-borderless">
     <thead>
+        <th></th>
         <th>Nome</th>
         <th>Categoria</th>
         <th>Data</th>
@@ -11,13 +14,15 @@
     <tbody>
         {% for event in events %}
         <tr>
-            <td><a href="{{ url_for('event', event_id=event.id) }}">{{ event.name }}</a></td>
-            <td>{{ event.category }}</td>
-            <td>{{ event.date_time.strftime('%d/%m/%Y')  }}</td>
+            <td><img src="{{ event.image_url }}" width="150px"></td>
+            <td style="vertical-align: middle;"><a href="{{ url_for('event', event_id=event.id) }}">{{ event.name }}</a></td>
+            <td style="vertical-align: middle;">{{ event.category }}</td>
+            <td style="vertical-align: middle;">{{ event.date_time.strftime('%d/%m/%Y')  }}</td>
         </tr>
-        {% else %}
-        <span>Nenhuma event criado ainda.</span>
         {% endfor %}
     </tbody>
 </table>
+{% else %}
+<span class="text-warning">Nenhuma event criado ainda.</span>
+{% endif %}
 {% endblock %}

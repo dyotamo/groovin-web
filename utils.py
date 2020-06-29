@@ -1,6 +1,8 @@
+from cloudinary.uploader import upload
 from flask import request, url_for
 
 from models import Event
+from constants import ALLOWED_EXTENSIONS
 
 
 def view_event_dlc(*args, **kwargs):
@@ -13,5 +15,5 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-UPLOAD_FOLDER = './data'
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+def upload_photo(image):
+    return upload(image)['secure_url']

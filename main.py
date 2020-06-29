@@ -9,7 +9,8 @@ from werkzeug.utils import secure_filename
 
 from services import get_promoter, check_promoter, get_events, create_event, get_event, check_object
 from forms import LoginForm, EventForm
-from utils import view_event_dlc, UPLOAD_FOLDER, allowed_file
+from utils import view_event_dlc, allowed_file, upload_photo
+from constants import UPLOAD_FOLDER
 
 
 app = Flask(__name__)
@@ -83,10 +84,15 @@ def new_event():
 
         if allowed_file(image.filename):
             filename = secure_filename(image.filename)
-            image.save(join(app.config['UPLOAD_FOLDER'], filename))
+            image_path = join(app.config['UPLOAD_FOLDER'], filename)
+
+            # tmp save
+            image.save(join(image_path))
+
+            image_url = upload_photo(image_path)
 
             event = create_event(
-                name=form.name.data, category=form.category.data, description=form.description.data, image_url=image.filename)
+                name=form.name.data, category=form.category.data, description=form.description.data, image_url=image_url)
 
             flash('Evento criada', 'success')
             return redirect(url_for('index'))
@@ -95,17 +101,17 @@ def new_event():
     return render_template('events/new.html', form=form)
 
 
-@app.route('/events/<int:event_id>', methods=['get'])
-@login_required
-@register_breadcrumb(app, '.events.details', '',
-                     dynamic_list_constructor=view_event_dlc)
+@ app.route('/events/<int:event_id>', methods=['get'])
+@ login_required
+@ register_breadcrumb(app, '.events.details', '',
+                      dynamic_list_constructor=view_event_dlc)
 def event(event_id):
     event = get_event(event_id=event_id)
     check_object(event)
     return render_template('events/details.html', event=event)
 
 
-@app.errorhandler(404)
+@ app.errorhandler(404)
 def not_found(e):
     resp = jsonify(dict(error="Not Found"))
     resp.status_code = 404
