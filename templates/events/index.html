@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block container %}
+<h4><a href="{{ url_for('new_event') }}">+ Evento</a></h4>
+<table class="table table-borderless">
+    <thead>
+        <th>Nome</th>
+        <th>Categoria</th>
+        <th>Data</th>
+    </thead>
+    <tbody>
+        {% for event in events %}
+        <tr>
+            <td><a href="{{ url_for('event', event_id=event.id) }}">{{ event.name }}</a></td>
+            <td>{{ event.category }}</td>
+            <td>{{ event.date_time.strftime('%d/%m/%Y')  }}</td>
+        </tr>
+        {% else %}
+        <span>Nenhuma event criado ainda.</span>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

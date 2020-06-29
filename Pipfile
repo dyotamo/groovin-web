@@ -1,0 +1,23 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+autopep8 = "*"
+
+[packages]
+flask = "*"
+peewee = "*"
+flask-login = "*"
+flask-wtf = "*"
+flask-breadcrumbs = "*"
+flask-restful = "*"
+jsonschema = "*"
+dsnparse = "*"
+psycopg2 = "*"
+gunicorn = "*"
+python-dotenv = "*"
+
+[requires]
+python_version = "3.6"
