@@ -1,1 +1,0 @@
-# Esta pasta de uploads é fictícia. Em produção deve ser substituída por um serviço de upload em cloud.

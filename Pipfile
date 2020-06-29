@@ -17,7 +17,7 @@ jsonschema = "*"
 dsnparse = "*"
 psycopg2 = "*"
 gunicorn = "*"
-python-dotenv = "*"
+cloudinary = "*"
 
 [requires]
 python_version = "3.6"

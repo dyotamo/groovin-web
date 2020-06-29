@@ -17,6 +17,4 @@ class LoginForm(FlaskForm):
 class EventForm(FlaskForm):
     name = TextField('Nome', validators=[_REQUIRED])
     category = SelectField('Categoria', choices=_CATEGORIES)
-    # date_time = DateTimeField(
-    #     'Horário', format='%d/%m/%y', validators=[_REQUIRED])
-    description = TextAreaField('Descrição', validators=[])
+    description = TextAreaField('Descrição', validators=[_REQUIRED])

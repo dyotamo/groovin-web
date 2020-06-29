@@ -27,6 +27,7 @@ class Event(Model):
     category = CharField()
     date_time = DateTimeField()
     promoter = ForeignKeyField(Promoter, backref='events')
+    image_url = CharField()
 
     class Meta:
         database = db

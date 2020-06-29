@@ -29,9 +29,9 @@ def get_events():
     return current_user.events
 
 
-def create_event(name, category, description, date_time=datetime.now()):
+def create_event(name, category, description,  image_url, date_time=datetime.now()):
     Event.create(name=name, category=category,
-                 date_time=date_time, description=description, promoter=current_user.id)
+                 date_time=date_time, description=description, promoter=current_user.id, image_url=image_url)
 
 
 def get_event(event_id):
