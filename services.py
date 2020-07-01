@@ -4,12 +4,16 @@ from flask import abort
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import current_user
 
-from models import Promoter, Event
+from models import db, Promoter, Event, Ticket
+from utils import upload_photo
 
 
-def create_promoter(name, email, password='admin'):
-    Promoter.create(name=name, email=email,
-                    password=generate_password_hash(password))
+def generate_hash(passwd):
+    return generate_password_hash(passwd)
+
+
+def create_promoter(**kwargs):
+    Promoter.create(**kwargs)
 
 
 def get_promoter(promoter_id):
@@ -25,22 +29,31 @@ def check_promoter(email, password):
         pass
 
 
-def get_events():
-    return current_user.events
-
-
-def create_event(name, category, description,  image_url, date_time=datetime.now()):
-    Event.create(name=name, category=category,
-                 date_time=date_time, description=description, promoter=current_user.id, image_url=image_url)
+def create_event(**kwargs):
+    return Event.create(promoter=current_user.id, **kwargs)
 
 
 def get_event(event_id):
     try:
         return Event[event_id]
     except Event.DoesNotExist:
-        pass
-
-
-def check_object(obj):
-    if obj is None:
         return abort(404)
+
+
+def remove_event(event):
+    event.delete_instance()
+
+
+def update_event(event, data):
+    image = _remove_csrf_token_and_image_fields(data)
+    Event.update(image_url=upload_photo(image), **
+                 data).where(Event.id == event.id).execute()
+
+
+def _remove_csrf_token_and_image_fields(data):
+    data.pop('csrf_token')
+    return data.pop('image')
+
+
+def create_ticket(**kwargs):
+    Ticket.create(**kwargs)

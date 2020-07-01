@@ -3,26 +3,34 @@
 {% block container %}
 <h4><a href="{{ url_for('new_event') }}">+ Evento</a></h4>
 
-{% if events %}
+{% if current_user.events %}
 <table class="table table-borderless">
     <thead>
         <th></th>
         <th>Nome</th>
         <th>Categoria</th>
         <th>Data</th>
+        <th>Local</th>
     </thead>
     <tbody>
-        {% for event in events %}
+        {% for event in current_user.events %}
         <tr>
-            <td><img src="{{ event.image_url }}" width="150px"></td>
-            <td style="vertical-align: middle;"><a href="{{ url_for('event', event_id=event.id) }}">{{ event.name }}</a></td>
+            {% if event.image_url %}
+            <td><img src="{{ event.image_url }}" class="rounded" width="150px"></td>
+            {% else %}
+            <td></td>
+            {% endif %}
+            <td style="vertical-align: middle;">
+                <a href="{{ url_for('event', event_id=event.id) }}">{{ event.name }}</a>
+            </td>
             <td style="vertical-align: middle;">{{ event.category }}</td>
             <td style="vertical-align: middle;">{{ event.date_time.strftime('%d/%m/%Y')  }}</td>
+            <td style="vertical-align: middle;">{{ event.address  }}</td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
 {% else %}
-<span class="text-warning">Nenhuma event criado ainda.</span>
+<span class="alert alert-info">Nenhum evento criado, ainda.</span>
 {% endif %}
 {% endblock %}

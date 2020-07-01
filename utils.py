@@ -1,8 +1,11 @@
+from os.path import join
+from datetime import datetime
+
 from cloudinary.uploader import upload
 from flask import request, url_for
+from werkzeug.utils import secure_filename
 
 from models import Event
-from constants import ALLOWED_EXTENSIONS
 
 
 def view_event_dlc(*args, **kwargs):
@@ -11,9 +14,16 @@ def view_event_dlc(*args, **kwargs):
     return [{'text': event.name, 'url': url_for('event', event_id=event.id)}]
 
 
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-
 def upload_photo(image):
-    return upload(image)['secure_url']
+    if image is not None:
+        image_path = join('/tmp', secure_filename(image.filename))
+        image.save(join(image_path))  # tmp save
+        return upload(image_path)['secure_url']
+
+
+def is_valid_date_time(date_time):
+    return date_time > datetime.now()
+
+
+def ticket_already_added(event, kind):
+    return any(ticket.name == kind for ticket in event.tickets)
