@@ -23,6 +23,11 @@ class Promoter(Model, UserMixin):
     bio = TextField()
     password = CharField()
 
+    def to_map(self):
+        data = self.__dict__['__data__']
+        data.pop('password')
+        return data
+
     class Meta:
         database = db
 
@@ -37,6 +42,11 @@ class Event(Model):
     promoter = ForeignKeyField(Promoter,
                                backref='events',
                                on_delete='CASCADE')
+
+    def to_map(self):
+        data = self.__dict__['__data__']
+        data['date_time'] = data['date_time'].strftime('%d/%m/%Y, %H:%M:%S')
+        return data
 
     class Meta:
         database = db

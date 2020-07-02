@@ -1,4 +1,6 @@
+from flask import abort
 from werkzeug.security import check_password_hash
+
 from models import Promoter
 
 
@@ -7,7 +9,10 @@ def create_promoter(**kwargs):
 
 
 def get_promoter(promoter_id):
-    return Promoter[promoter_id]
+    try:
+        return Promoter[promoter_id]
+    except Promoter.DoesNotExist:
+        abort(404)
 
 
 def check_promoter(email, password):

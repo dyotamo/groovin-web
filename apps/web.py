@@ -1,20 +1,20 @@
 from flask_login import login_required, login_user, logout_user
 from flask_breadcrumbs import register_breadcrumb
 from flask import (render_template, flash, redirect,
-                   url_for, jsonify, request, Blueprint)
+                   url_for, request, Blueprint)
 
 
-from services.event import create_event, get_event, update_event, remove_event
 from services.promoter import check_promoter
 from services.ticket import create_ticket
+from services.event import (create_event, get_event,
+                            update_event, remove_event,)
 
 from forms import LoginForm, EventForm, TicketForm
 from models import db
 from utils import (view_event_dlc, upload_photo, ticket_already_added,)
 
 
-web = Blueprint('web', __name__,
-                template_folder='templates')
+web = Blueprint('web', __name__, template_folder='templates', url_prefix='/')
 
 
 @web.route('/', methods=['get'])
@@ -113,13 +113,6 @@ def new_ticket(event_id):
                            form=form,
                            title='Novo bolhete',
                            action='Criar')
-
-
-@web.errorhandler(404)
-def not_found(e):
-    resp = jsonify(dict(error="Not Found"))
-    resp.status_code = 404
-    return resp
 
 
 @web.route('/login', methods=['get', 'post'])

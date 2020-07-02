@@ -22,13 +22,13 @@
 
 <body class="container">
     {% if current_user.is_authenticated %}
-    <nav aria-label=" breadcrumb">
+    <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            {%- for breadcrumb in breadcrumbs -%}
+            {% for breadcrumb in breadcrumbs %}
             <li class="breadcrumb-item">
                 <a href="{{ breadcrumb.url }}">{{ breadcrumb.text }}</a>
             </li>
-            {%- endfor -%}
+            {% endfor %}
         </ol>
     </nav>
     {% endif %}

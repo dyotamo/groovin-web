@@ -30,3 +30,7 @@ def update_event(event, data):
                      data).where(Event.id == event.id).execute()
         return True, None
     return False, 'A data informada é superior a data actual.'
+
+
+def all_events():
+    return Event.select()
