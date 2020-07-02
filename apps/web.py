@@ -1,5 +1,5 @@
 from flask_login import login_required, login_user, logout_user
-from flask_breadcrumbs import register_breadcrumb
+from flask_breadcrumbs import register_breadcrumb, default_breadcrumb_root
 from flask import (render_template, flash, redirect,
                    url_for, request, Blueprint)
 
@@ -15,6 +15,7 @@ from utils import (view_event_dlc, upload_photo, ticket_already_added,)
 
 
 web = Blueprint('web', __name__, template_folder='templates', url_prefix='/')
+default_breadcrumb_root(web, '.')
 
 
 @web.route('/', methods=['get'])
