@@ -1,14 +1,18 @@
 from os import environ
-from datetime import datetime
 
-from peewee import *
 from flask_login import UserMixin
 from dsnparse import parse_environ
+from peewee import (SqliteDatabase, PostgresqlDatabase, Model, CharField,
+                    TextField, DateTimeField, ForeignKeyField, DecimalField,
+                    IntegerField,)
 
 if(environ.get('DATABASE_URL')):
     url = parse_environ('DATABASE_URL')
-    db = PostgresqlDatabase(url.paths[0], user=url.username, password=url.password,
-                            host=url.host, port=url.port)
+    db = PostgresqlDatabase(url.paths[0],
+                            user=url.username,
+                            password=url.password,
+                            host=url.host,
+                            port=url.port)
 else:
     db = SqliteDatabase('groovin.db')
 
@@ -30,7 +34,9 @@ class Event(Model):
     address = CharField()
     description = TextField()
     image_url = CharField(null=True)
-    promoter = ForeignKeyField(Promoter, backref='events', on_delete='CASCADE')
+    promoter = ForeignKeyField(Promoter,
+                               backref='events',
+                               on_delete='CASCADE')
 
     class Meta:
         database = db
@@ -38,7 +44,9 @@ class Event(Model):
 
 class Ticket(Model):
     name = CharField()
-    event = ForeignKeyField(Event, backref='tickets', on_delete='CASCADE')
+    event = ForeignKeyField(Event,
+                            backref='tickets',
+                            on_delete='CASCADE')
     price = DecimalField()
     total = IntegerField()
 
@@ -48,7 +56,9 @@ class Ticket(Model):
 
 class Order(Model):
     cellphone = CharField()
-    ticket = ForeignKeyField(Ticket, backref='orders', on_delete='CASCADE')
+    ticket = ForeignKeyField(Ticket,
+                             backref='orders',
+                             on_delete='CASCADE')
     total = IntegerField()
 
     class Meta:
@@ -57,7 +67,10 @@ class Order(Model):
 
 if __name__ == '__main__':
     db.create_tables([Promoter, Event, Ticket, Order, ])
-    from services import create_promoter, generate_hash
+    from services.promoter import create_promoter
+    from werkzeug.security import generate_password_hash
 
-    create_promoter(name='Dássone J. Yotamo', email='dyotamo@gmail.com',
-                    bio='A nice guy online.', password=generate_hash('admin'))
+    create_promoter(name='Dássone J. Yotamo',
+                    email='dyotamo@gmail.com',
+                    bio='A nice guy online.',
+                    password=generate_password_hash('admin'))

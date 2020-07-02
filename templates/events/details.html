@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block container %}
-<h2>{{ event.name }} <small><a href="{{ url_for('new_ticket', event_id=event.id) }}">(+ ticket)</a></small></h2>
+<h2>{{ event.name }} <small><a href="{{ url_for('web.new_ticket', event_id=event.id) }}">(+ ticket)</a></small></h2>
 <hr />
 <div class="row">
     {% if event.image_url %}
@@ -38,14 +38,14 @@
             </li>
             {% else %}
             <span class="text-info">Nenhum bilhete criado, ainda. Clique <a
-                    href="{{ url_for('new_ticket', event_id=event.id) }}">aqui</a> para adicionar.</span>
+                    href="{{ url_for('web.new_ticket', event_id=event.id) }}">aqui</a> para adicionar.</span>
             {% endfor %}
         </ul>
     </div>
     <div class="col" style="padding: 5px;">
         <h4>Acções</h4>
         <div>
-            <a href="{{ url_for('edit_event', event_id=event.id) }}" class="btn btn-primary">Editar</a>
+            <a href="{{ url_for('web.edit_event', event_id=event.id) }}" class="btn btn-primary">Editar</a>
             <button class="btn btn-danger" data-toggle="modal" data-target="#modalRemove">Remover</button>
         </div>
     </div>
@@ -66,7 +66,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Não</button>
-                <form method="post" action="{{ url_for('delete_event', event_id=event.id) }}">
+                <form method="post" action="{{ url_for('web.delete_event', event_id=event.id) }}">
                     <button type="submit" class="btn btn-danger">Sim</button>
                 </form>
             </div>

@@ -20,7 +20,7 @@
     <title>Groovin!</title>
 </head>
 
-<body class="container-fluid" style="padding: 20px;">
+<body class="container">
     {% if current_user.is_authenticated %}
     <nav aria-label=" breadcrumb">
         <ol class="breadcrumb">
@@ -55,7 +55,7 @@
     <footer>
         {% if current_user.is_authenticated %}
         <span>Bem-vindo, {{ current_user.name }} </span> |
-        <span><a href="{{ url_for('logout') }}">Logout</a></span>
+        <span><a href="{{ url_for('web.logout') }}">Logout</a></span>
         {% endif %}
     </footer>
 </body>

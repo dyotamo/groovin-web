@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
 {% block container %}
-<h4><a href="{{ url_for('new_event') }}">+ Evento</a></h4>
+<h4><a href="{{ url_for('web.new_event') }}">+ Evento</a></h4>
 
 {% if current_user.events %}
-<table class="table table-borderless">
+<table class="table table-borderless table-hover table-sm">
     <thead>
         <th></th>
         <th>Nome</th>
@@ -21,7 +21,7 @@
             <td></td>
             {% endif %}
             <td style="vertical-align: middle;">
-                <a href="{{ url_for('event', event_id=event.id) }}">{{ event.name }}</a>
+                <a href="{{ url_for('web.event', event_id=event.id) }}">{{ event.name }}</a>
             </td>
             <td style="vertical-align: middle;">{{ event.category }}</td>
             <td style="vertical-align: middle;">{{ event.date_time.strftime('%d/%m/%Y')  }}</td>

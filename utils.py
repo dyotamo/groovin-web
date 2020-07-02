@@ -8,10 +8,15 @@ from werkzeug.utils import secure_filename
 from models import Event
 
 
+def remove_csrf_token_and_image_fields(data):
+    data.pop('csrf_token')
+    return data.pop('image')
+
+
 def view_event_dlc(*args, **kwargs):
     event_id = request.view_args['event_id']
     event = Event.get(event_id)
-    return [{'text': event.name, 'url': url_for('event', event_id=event.id)}]
+    return [{'text': event.name, 'url': url_for('web.event', event_id=event.id)}]
 
 
 def upload_photo(image):
