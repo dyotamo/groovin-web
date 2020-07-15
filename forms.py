@@ -1,19 +1,21 @@
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileRequired, FileAllowed
+from flask_wtf.file import FileField, FileAllowed
 from flask_wtf.html5 import EmailField, DateTimeField
 
-from wtforms import TextField, PasswordField, TextAreaField, SelectField, DecimalField, IntegerField
+from wtforms import (TextField, PasswordField, TextAreaField,
+                     SelectField, DecimalField, IntegerField)
 from wtforms.validators import DataRequired
 
 
 _REQUIRED = DataRequired(message="Este campo é obrigatório!")
 _IMAGE_ONLY = FileAllowed(['png', 'jpg', 'jpeg'], 'Apenas imagens!')
 
-_EVENT_CATEGORIES = [('Disco', 'Disco'), ('Festival',
-                                          'Festival'), ('Show', 'Show'), ('Outros', 'Outros')]
+_EVENT_CATEGORIES = [('Disco', 'Disco'), ('Festival', 'Festival'),
+                     ('Show', 'Show'), ('Outros', 'Outros')]
 
 _TICKET_CATEGORIES = [('Normal', 'Normal'), ('VIP', 'VIP'),
-                      ('Mulher', 'Mulher'), ('Criança', 'Criança'), ('Outro', 'Outro')]
+                      ('Mulher', 'Mulher'), ('Criança', 'Criança'),
+                      ('Outro', 'Outro')]
 
 
 class LoginForm(FlaskForm):

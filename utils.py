@@ -16,7 +16,8 @@ def remove_csrf_token_and_image_fields(data):
 def view_event_dlc(*args, **kwargs):
     event_id = request.view_args['event_id']
     event = Event.get(event_id)
-    return [{'text': event.name, 'url': url_for('web.event', event_id=event.id)}]
+    return [dict(text=event.name,
+                 url=url_for('web.event', event_id=event.id))]
 
 
 def upload_photo(image):

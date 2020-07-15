@@ -75,7 +75,7 @@ def edit_event(event_id):
     if form.validate_on_submit():
         updated, error = update_event(event, form.data)
         if updated:
-            flash('Evento actualizado com sucesso', 'success')
+            flash('Evento atualizado com sucesso', 'success')
             return redirect(url_for('web.index'))
         else:
             flash(error, 'danger')
@@ -112,7 +112,7 @@ def new_ticket(event_id):
 
     return render_template('tickets/form.html',
                            form=form,
-                           title='Novo bolhete',
+                           title='Novo bilhete',
                            action='Criar')
 
 
