@@ -18,7 +18,6 @@ dsnparse = "*"
 psycopg2 = "*"
 gunicorn = "*"
 cloudinary = "*"
-flask-extras = "*"
 
 [requires]
 python_version = "3.6"
